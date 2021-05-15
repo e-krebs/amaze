@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { Coordinates, Size } from "../interfaces";
+import { Coordinates } from "../interfaces";
 import arrowRight from '../public/arrow_right.svg';
 import arrowBottom from '../public/arrow_bottom.svg';
 import player from '../public/player.svg';
@@ -7,15 +7,9 @@ import player from '../public/player.svg';
 import { getCell, getEntryDirections, getExitDirections, isCell } from '../utils/cell';
 import { usePlayer } from '../utils/contexts/PlayerContext';
 import { useMaze } from '../utils/contexts/MazeContext';
+import { sizeClass } from '../utils/styles/size';
 
 type Props = { coordinates: Coordinates };
-
-const sizeClass: Record<Size, { width: string, height: string, item: string }> = {
-  S: { width: 'w-4', height: 'h-4', item: 'w-2' },
-  M: { width: 'w-8', height: 'h-8', item: 'w-4' },
-  L: { width: 'w-12', height: 'h-12', item: 'w-6' },
-  XL: { width: 'w-16', height: 'h-16', item: 'w-8' }
-}
 
 export const Cell = ({ coordinates }: Props) => {
   const { maze, size } = useMaze();
