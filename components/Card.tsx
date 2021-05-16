@@ -1,11 +1,11 @@
 import cx from 'classnames';
 import { FC, HtmlHTMLAttributes } from "react";
 
-type Props = HtmlHTMLAttributes<HTMLElement> & {
+export type CardProps = HtmlHTMLAttributes<HTMLElement> & {
   fullBleed?: boolean;
 };
 
-export const Card: FC<Props> = ({
+export const Card: FC<CardProps> = ({
   fullBleed = false,
   className,
   children
