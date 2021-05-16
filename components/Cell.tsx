@@ -1,23 +1,30 @@
 import cx from 'classnames';
 import { Coordinates } from "../interfaces";
 import arrowRight from '../public/arrow_right.svg';
+import arrowLeft from '../public/arrow_left.svg';
 import arrowBottom from '../public/arrow_bottom.svg';
+import arrowTop from '../public/arrow_top.svg';
 import player from '../public/player.svg';
 
 import { getCell, getEntryDirections, getExitDirections, isCell } from '../utils/cell';
 import { usePlayer } from '../utils/contexts/PlayerContext';
 import { useMaze } from '../utils/contexts/MazeContext';
 import { sizeClass } from '../utils/styles/size';
+import { positionClass } from '../utils/styles/position';
+import { useGame } from '../utils/contexts/GameContext';
 
 type Props = { coordinates: Coordinates };
 
 export const Cell = ({ coordinates }: Props) => {
-  const { maze, size } = useMaze();
+  const { maze } = useMaze();
+  const { size } = useGame();
   const { position } = usePlayer();
   const cell = getCell(maze, coordinates);
   const entryInfo = getEntryDirections(maze, coordinates);
   const exitInfo = getExitDirections(maze, coordinates);
   const isPlayer = isCell(position, coordinates);
+
+  const itemClass = sizeClass[size].item;
 
   return (
     <div
@@ -29,40 +36,39 @@ export const Cell = ({ coordinates }: Props) => {
         coordinates[0] === 0 && 'col-start-1',
         cell?.top === 'closed' && 'border-t',
         cell?.left === 'closed' && 'border-l',
-        (entryInfo.left || entryInfo.top) && 'bg-yellow-400',
-        (exitInfo.right || exitInfo.bottom) && 'bg-green-400'
+        (entryInfo.top || entryInfo.bottom || entryInfo.left || entryInfo.right) && 'bg-yellow-400',
+        (exitInfo.top || exitInfo.bottom || exitInfo.left || exitInfo.right) && 'bg-green-400'
       )}
       title={`${coordinates[0]},${coordinates[1]}`}
     >
-      {entryInfo.left && (
-        <img
-          className={cx('absolute -left-1/4 top-1/4', sizeClass[size].item)}
-          src={arrowRight}
-        />
-      )}
       {entryInfo.top && (
-        <img
-          className={cx('absolute -top-1/4 left-1/4', sizeClass[size].item)}
-          src={arrowBottom}
-        />
+        <img className={cx(positionClass.top, itemClass)} src={arrowBottom} />
       )}
-      {exitInfo.right && (
-        <img
-          className={cx('absolute -right-1/4 top-1/4', sizeClass[size].item)}
-          src={arrowRight}
-        />
+      {entryInfo.bottom && (
+        <img className={cx(positionClass.bottom, itemClass)} src={arrowTop} />
+      )}
+      {entryInfo.left && (
+        <img className={cx(positionClass.left, itemClass)} src={arrowRight} />
+      )}
+      {entryInfo.right && (
+        <img className={cx(positionClass.right, itemClass)} src={arrowLeft} />
+      )}
+
+      {exitInfo.top && (
+        <img className={cx(positionClass.top, itemClass)} src={arrowTop} />
       )}
       {exitInfo.bottom && (
-        <img
-          className={cx('absolute -bottom-1/4 left-1/4', sizeClass[size].item)}
-          src={arrowBottom}
-        />
+        <img className={cx(positionClass.bottom, itemClass)} src={arrowBottom} />
       )}
+      {exitInfo.left && (
+        <img className={cx(positionClass.left, itemClass)} src={arrowLeft} />
+      )}
+      {exitInfo.right && (
+        <img className={cx(positionClass.right, itemClass)} src={arrowRight} />
+      )}
+
       {isPlayer && (
-        <img
-          className={cx('absolute top-1/4 left-1/4', sizeClass[size].item)}
-          src={player}
-        />
+        <img className={cx(positionClass.center, itemClass)} src={player} />
       )}
     </div>
   )

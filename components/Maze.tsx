@@ -1,19 +1,32 @@
 import cx from 'classnames';
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { MazeData } from '../interfaces';
 import { getEntryCoordinates, isOneOfCells } from '../utils/cell';
+import { useGame } from '../utils/contexts/GameContext';
 import { MazeContext } from '../utils/contexts/MazeContext';
 import { PlayerContext, PlayerInfo } from '../utils/contexts/PlayerContext';
 import { moveLeft, moveRight, moveUp, moveDown } from '../utils/player';
 import { Cols, gridCols } from '../utils/styles/cols';
 import { Card } from './Card';
 import { Cell } from './Cell';
+import { DebugCard } from './DebugCard';
 import { KeyCap } from './KeyCap';
 
-type Props = { maze: MazeData };
+export const Maze = () => {
+  const { mazeIndex, mazeList, setMazeIndex, setHasWon } = useGame();
+  const maze = mazeList[mazeIndex];
 
-export const Maze = ({ maze }: Props) => {
+  let index = useRef<number>();
+  index.current = mazeIndex;
+
+  const nextMaze = useCallback(() => {
+    if (index.current! < mazeList.length - 1) {
+      setMazeIndex(index.current! + 1);
+    } else {
+      setHasWon(true);
+    }
+  }, []);
+
   const [position, setPosition] = useState(getEntryCoordinates(maze));
   const [canMove, setCanMove] = useState(true);
 
@@ -25,6 +38,8 @@ export const Maze = ({ maze }: Props) => {
     setCanMove(true);
   }, [maze]);
 
+  useEffect(restart, [maze]);
+
   const goRight = useCallback(() => setPosition(moveRight(maze, player.current)), [maze]);
   const goLeft = useCallback(() => setPosition(moveLeft(maze, player.current)), [maze]);
   const goUp = useCallback(() => setPosition(moveUp(maze, player.current)), [maze]);
@@ -34,11 +49,12 @@ export const Maze = ({ maze }: Props) => {
   useHotkeys('left', goLeft);
   useHotkeys('up', goUp);
   useHotkeys('down', goDown);
-  useHotkeys('r', restart);
+  useHotkeys('R', restart);
 
   useEffect(() => {
     if (isOneOfCells(maze.exits, ...position)) {
       setCanMove(false);
+      nextMaze();
     }
   }, [position]);
 
@@ -48,10 +64,10 @@ export const Maze = ({ maze }: Props) => {
   }, [maze]);
 
   return (
-    <PlayerContext.Provider value={{ position, canMove }}>
-      <MazeContext.Provider value={{ maze, size: "XL" }}>
-        <div className="flex flex-col items-center lg:grid lg:grid-cols-2 lg:grid-rows-2">
-          <Card className="order-2 lg:order-1 lg:row-span-2 lg:self-start p-0 w-full lg:w-auto" fullBleed={true}>
+    <MazeContext.Provider value={{ maze, nextMaze }}>
+      <PlayerContext.Provider value={{ position, canMove }}>
+        <div className="flex flex-col items-center lg:grid lg:grid-cols-2 lg:grid-rows-3">
+          <Card className="order-2 lg:order-1 lg:row-span-3 lg:self-start p-0 w-full lg:w-auto" fullBleed={true}>
             <div className={cx('inline-grid grid-flow-row auto-cols-min pt-16 pl-16 pb-0 pr-0', gridCols[cols])}>
               {maze.grid.map((line, y) => (
                 <Fragment key={y}>
@@ -73,18 +89,14 @@ export const Maze = ({ maze }: Props) => {
               </div>
             </div>
             <div className="flex space-x-2">
-              <span>Press</span><KeyCap keyCode="r" onClick={restart} className="w-7 h-7" /><span>to restart</span>
+              <span>Press</span>
+              <KeyCap keyCode="r" onClick={restart} className="w-7 h-7" />
+              <span>to restart the current level</span>
             </div>
           </Card>
-          <Card className="order-3 lg:self-start w-full lg:w-80">
-            <div
-              className={cx(player.current.canMove ? 'text-green-400' : 'text-red-400')}
-            >
-              can move: {player.current.canMove ? 'yes' : 'NO'}
-            </div>
-          </Card>
+          <DebugCard className="lg:row-span-2 order-3 lg:self-start w-full lg:w-80" />
         </div>
-      </MazeContext.Provider>
-    </PlayerContext.Provider>
+      </PlayerContext.Provider>
+    </MazeContext.Provider>
   );
 }

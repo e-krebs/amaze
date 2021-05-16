@@ -1,9 +1,9 @@
 import { createContext, useContext } from "react"
-import { MazeData, Size } from "../../interfaces";
+import { MazeData } from "../../interfaces";
 
 export type MazeInfo = {
   maze: MazeData;
-  size: Size;
+  nextMaze: () => void;
 }
 
 export const MazeContext = createContext<MazeInfo | null>(null);

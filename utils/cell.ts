@@ -22,30 +22,40 @@ export const getEntryCoordinates = (data: MazeData): Coordinates => data.entry ?
 export const getEntryDirections = (
   data: MazeData,
   coordinates: Coordinates
-): Record<MazeWall, boolean> => {
+): Record<MazeWall | MazeNeigbhorsWall, boolean> => {
   if (!isCell(getEntryCoordinates(data), coordinates)) {
-    return { left: false, top: false };
+    return { left: false, right: false, top: false, bottom: false };
   }
 
+  const [x, y] = coordinates;
+
   const cell = getCell(data, coordinates);
+  const rightCell = getCell(data, [x + 1, y]);
+  const bottomCell = getCell(data, [x, y + 1]);
+
   return {
-    left: cell?.left !== 'closed',
-    top: cell?.top !== 'closed'
-  }
+    left: cell?.left !== 'closed' && x === 0,
+    top: cell?.top !== 'closed' && y === 0,
+    right: rightCell?.left !== 'closed' && getCell(data, [x + 2, y]) === undefined,
+    bottom: bottomCell?.top !== 'closed' && getCell(data, [x, y + 2]) === undefined,
+  };
 }
 
 export const getExitDirections = (
   data: MazeData,
   [x, y]: Coordinates
-): Record<MazeNeigbhorsWall, boolean> => {
+): Record<MazeWall | MazeNeigbhorsWall, boolean> => {
   if (!isOneOfCells(data.exits, x, y)) {
-    return { right: false, bottom: false };
+    return { left: false, right: false, top: false, bottom: false };
   }
 
+  const cell = getCell(data, [x, y]);
   const rightCell = getCell(data, [x + 1, y]);
   const bottomCell = getCell(data, [x, y + 1]);
   return {
-    right: rightCell?.left !== 'closed',
-    bottom: bottomCell?.top !== 'closed'
+    left: cell?.left !== 'closed' && x === 0,
+    top: cell?.top !== 'closed' && y === 0,
+    right: rightCell?.left !== 'closed'  && getCell(data, [x + 2, y]) === undefined,
+    bottom: bottomCell?.top !== 'closed' && getCell(data, [x, y + 2]) === undefined,
   }
 }

@@ -1,27 +1,22 @@
-import { GetStaticProps } from 'next'
-import { Maze } from '../components/Maze'
-import { MazeData } from '../interfaces'
-import { sampleMaze } from '../utils/sample-maze'
 import 'tailwindcss/tailwind.css'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
+import dynamic from 'next/dynamic';
 
-type Props = {
-  maze: MazeData;
-}
+const GameWithNoSSR = dynamic(
+  () => import('../components/Game'),
+  { ssr: false }
+)
 
-const IndexPage = ({ maze }: Props) => {
+const IndexPage = () => {
+
   useEffect(() => { document.body.classList.add('bg-gray-50') });
 
   return (
     <main className="inline-flex flex-col items-center w-full p-8">
       <h1 className="text-4xl font-bold py-8">aMaze</h1>
-      <Maze maze={maze} />
+      <GameWithNoSSR />
     </main>
   );
 }
-export const getStaticProps: GetStaticProps = async () => {
-  const maze: MazeData = sampleMaze
-  return { props: { maze } }
-}
 
-export default IndexPage
+export default IndexPage;
