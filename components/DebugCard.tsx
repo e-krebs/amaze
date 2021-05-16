@@ -14,10 +14,10 @@ export const DebugCard = (props: CardProps) => {
       <h3 className="text-lg font-semibold">{'<'}debug info{'>'}</h3>
       <div>size: {size}</div>
       <div>position: {position[0]},{position[1]}</div>
-      <div className={cx(canMove ? 'text-green-600' : 'text-red-600')}>
+      <div className={cx(canMove ? 'text-green-700' : 'text-red-600')}>
         can move: {canMove ? 'yes' : 'NO'}
       </div>
-      <div className={cx(hasWon ? 'text-green-600' : 'text-red-600')}>
+      <div className={cx(hasWon ? 'text-green-700' : 'text-red-600')}>
         has won: {hasWon ? 'yes' : 'NO'}
       </div>
       <div>maze {mazeIndex + 1} of {mazeList.length}</div>
