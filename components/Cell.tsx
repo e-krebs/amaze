@@ -42,33 +42,33 @@ export const Cell = ({ coordinates }: Props) => {
       title={`${coordinates[0]},${coordinates[1]}`}
     >
       {entryInfo.top && (
-        <img className={cx(positionClass.top, itemClass)} src={arrowBottom} />
+        <img className={cx(positionClass.top, itemClass)} src={arrowBottom} alt="" />
       )}
       {entryInfo.bottom && (
-        <img className={cx(positionClass.bottom, itemClass)} src={arrowTop} />
+        <img className={cx(positionClass.bottom, itemClass)} src={arrowTop} alt="" />
       )}
       {entryInfo.left && (
-        <img className={cx(positionClass.left, itemClass)} src={arrowRight} />
+        <img className={cx(positionClass.left, itemClass)} src={arrowRight} alt="" />
       )}
       {entryInfo.right && (
-        <img className={cx(positionClass.right, itemClass)} src={arrowLeft} />
+        <img className={cx(positionClass.right, itemClass)} src={arrowLeft} alt="" />
       )}
 
       {exitInfo.top && (
-        <img className={cx(positionClass.top, itemClass)} src={arrowTop} />
+        <img className={cx(positionClass.top, itemClass)} src={arrowTop} alt="" />
       )}
       {exitInfo.bottom && (
-        <img className={cx(positionClass.bottom, itemClass)} src={arrowBottom} />
+        <img className={cx(positionClass.bottom, itemClass)} src={arrowBottom} alt="" />
       )}
       {exitInfo.left && (
-        <img className={cx(positionClass.left, itemClass)} src={arrowLeft} />
+        <img className={cx(positionClass.left, itemClass)} src={arrowLeft} alt="" />
       )}
       {exitInfo.right && (
-        <img className={cx(positionClass.right, itemClass)} src={arrowRight} />
+        <img className={cx(positionClass.right, itemClass)} src={arrowRight} alt="" />
       )}
 
       {isPlayer && (
-        <img className={cx(positionClass.center, itemClass)} src={player} />
+        <img className={cx(positionClass.center, itemClass)} src={player} alt="" />
       )}
     </div>
   )
