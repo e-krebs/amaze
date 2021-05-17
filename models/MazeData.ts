@@ -38,7 +38,7 @@ export class MazeData {
   }
 
   public getExitDirections([x, y]: Coordinates): Record<MazeWall | MazeNeigbhorsWall, boolean> {
-    if (!isOneOfCells(this.exits, x, y)) {
+    if (!isOneOfCells(this.exits, [x, y])) {
       return { left: false, right: false, top: false, bottom: false };
     }
   

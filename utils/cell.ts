@@ -5,7 +5,6 @@ export const isCell = (entry: Coordinates = [0, 0], [x, y]: Coordinates): boolea
 
 export const isOneOfCells = (
   exits: [Coordinates, ...Coordinates[]],
-  x: number,
-  y: number
+  [x, y]: Coordinates
 ): boolean =>
   exits.map((exit) => isCell(exit, [x, y])).reduce((x, y) => x || y);

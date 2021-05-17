@@ -52,7 +52,7 @@ export const Maze = () => {
   useHotkeys('R', restart);
 
   useEffect(() => {
-    if (isOneOfCells(maze.exits, ...position)) {
+    if (isOneOfCells(maze.exits, position)) {
       setCanMove(false);
       nextMaze();
     }
