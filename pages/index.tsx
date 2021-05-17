@@ -19,7 +19,9 @@ const IndexPage = () => (
       <header className="flex items-baseline w-full lg:w-1/4 pb-6">
         <h1 className="flex-grow text-center px-8 text-4xl font-bold">aMaze</h1>
         <a
-          href="https://github.com/e-krebs/amaze" target="_blank"
+          href="https://github.com/e-krebs/amaze"
+          target="_blank"
+          rel="noopener"
           className="w-6 h-6 opacity-50 hover:opacity-75"
           title="Sources available on github."
         >
