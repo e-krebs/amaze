@@ -12,7 +12,7 @@ export const Card: FC<CardProps> = ({
 }) => (
   <section
     className={cx(
-      'shadow-lg rounded m-3 bg-white',
+      'w-full lg:w-auto shadow-lg rounded m-3 bg-white',
       !fullBleed && 'p-6',
       className
     )}

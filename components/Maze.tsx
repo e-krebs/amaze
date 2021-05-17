@@ -41,7 +41,7 @@ export const Maze = () => {
 
   return (
     <MazeContext.Provider value={{ maze: currentMaze, position }}>
-      <div className="flex flex-col items-center lg:grid lg:grid-cols-2 lg:grid-rows-3">
+      <div className="flex flex-col items-center w-full lg:w-auto lg:grid lg:grid-cols-2 lg:grid-rows-3">
         <Card
           className="order-2 lg:order-1 lg:row-span-3 lg:self-start p-0 w-full lg:w-auto"
           fullBleed={true}
