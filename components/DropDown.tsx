@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { ListState } from "@react-stately/list";
 import { MenuTriggerState } from '@react-stately/menu';
 import { useSelectState } from '@react-stately/select';
-import { useButton } from '@react-aria/button';
+import { ButtonAria, useButton } from '@react-aria/button';
 import { FocusScope } from '@react-aria/focus';
 import { useFocus } from '@react-aria/interactions';
 import { AriaListBoxOptions, useListBox, useOption } from '@react-aria/listbox';
@@ -10,8 +10,8 @@ import { useOverlay, DismissButton } from '@react-aria/overlays';
 import { AriaSelectOptions, HiddenSelect, useSelect } from '@react-aria/select';
 import { mergeProps } from '@react-aria/utils';
 import { Node } from '@react-types/shared';
-import React, { useMemo, useRef, useState } from 'react';
-import { Button } from './Button';
+import React, { ButtonHTMLAttributes, useMemo, useRef, useState } from 'react';
+import { buttonClassName } from './Button';
 
 type DropDownProps = AriaSelectOptions<{}> & { name?: string };
 
@@ -28,8 +28,8 @@ export const DropDown = (props: DropDownProps) => {
   );
 
   // Get props for the button based on the trigger props from useSelect
-  const { buttonProps } = useButton(triggerProps, ref);
-
+  const { buttonProps }: ButtonAria<ButtonHTMLAttributes<HTMLButtonElement>> = useButton(triggerProps, ref);
+  
   return (
     <div className="flex flex-col">
       <div {...labelProps} className="text-gray-600 text-sm">{props.label}</div>
@@ -39,14 +39,18 @@ export const DropDown = (props: DropDownProps) => {
         label={props.label}
         name={props.name}
       />
-      <Button {...buttonProps} forwardRef={ref} className="flex items-center">
+      <button
+        {...buttonProps}
+        ref={ref}
+        className={cx(buttonClassName(buttonProps.disabled), 'flex items-center')}
+      >
         <span {...valueProps}>
           {state.selectedItem
             ? state.selectedItem.rendered
             : 'Select an option'}
         </span>
         <span aria-hidden="true" className="text-xs pl-2">▼</span>
-      </Button>
+      </button>
       {state.isOpen && <ListBoxPopup {...menuProps} state={state} />}
     </div>
   );
