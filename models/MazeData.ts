@@ -70,16 +70,16 @@ export class MazeData {
 
   //#region open/closed methods
   public isNorthClosed = (coordinates: Coordinates): boolean =>
-    this.getCell(coordinates)?.north === 'closed';
+    this.getCell(coordinates)?.north === true;
 
   public isEastClosed = (coordinates: Coordinates): boolean =>
-    this.getCell(this.getEastCellCoordinates(coordinates))?.west === 'closed';
+    this.getCell(this.getEastCellCoordinates(coordinates))?.west === true;
 
   public isSouthClosed = (coordinates: Coordinates): boolean =>
-    this.getCell(this.getSouthCellCoordinates(coordinates))?.north === 'closed';
+    this.getCell(this.getSouthCellCoordinates(coordinates))?.north === true;
 
   public isWestClosed = (coordinates: Coordinates): boolean =>
-    this.getCell(coordinates)?.west === 'closed';
+    this.getCell(coordinates)?.west === true;
 
   public isNorthOpen = (coordinates: Coordinates | null, lastIsOpen: boolean = true): boolean =>
     coordinates !== null && !this.isNorthClosed(coordinates) && (lastIsOpen || !this.isLastNorth(coordinates));

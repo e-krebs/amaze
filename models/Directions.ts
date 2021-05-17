@@ -1,4 +1,4 @@
-import { MazeNeigbhorsWall, MazeWall } from "../interfaces";
+import { Direction } from "../interfaces";
 
 export class Directions {
   public north: boolean;
@@ -6,7 +6,7 @@ export class Directions {
   public south: boolean;
   public west: boolean;
 
-  constructor(init: Record<MazeWall | MazeNeigbhorsWall, boolean>) {
+  constructor(init: Record<Direction, boolean>) {
     this.north = init.north;
     this.east = init.east;
     this.south = init.south;

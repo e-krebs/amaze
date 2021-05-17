@@ -1,8 +1,6 @@
-import { MazeWallState } from "../interfaces";
-
 export class MazeCell {
-  public north?: MazeWallState;
-  public west?: MazeWallState;
+  public north?: boolean;
+  public west?: boolean;
 
   constructor(init?: MazeCell) {
     this.north = init?.north;
