@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react"
-import { MazeData, Size } from "../../interfaces";
+import { Size } from "../../interfaces";
+import { MazeData } from "../../models/MazeData";
 
 export type GameState = {
   size: Size;

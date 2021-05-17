@@ -1,4 +1,5 @@
-import { Coordinates, MazeData } from "../interfaces";
+import { Coordinates } from "../interfaces";
+import { MazeData } from "../models/MazeData";
 import { getCell } from "./cell";
 import { PlayerInfo } from "./contexts/PlayerContext";
 

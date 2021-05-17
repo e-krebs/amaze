@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react"
-import { MazeData } from "../../interfaces";
+import { MazeData } from "../../models/MazeData";
 
 export type MazeInfo = {
   maze: MazeData;

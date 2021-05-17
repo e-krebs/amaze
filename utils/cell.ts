@@ -1,4 +1,6 @@
-import { Coordinates, MazeCell, MazeData, MazeNeigbhorsWall, MazeWall } from "../interfaces";
+import { Coordinates, MazeNeigbhorsWall, MazeWall } from "../interfaces";
+import { MazeCell } from "../models/MazeCell";
+import { MazeData } from "../models/MazeData";
 
 export const getCell = (data: MazeData, [x, y]: Coordinates): MazeCell | undefined => {
   const line = data.grid[y];
