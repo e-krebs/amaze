@@ -6,7 +6,7 @@ import ArrowBottom from '../static/arrow_bottom.svg';
 import ArrowTop from '../static/arrow_top.svg';
 import Player from '../static/player.svg';
 
-import { getCell, getEntryDirections, getExitDirections, isCell } from '../utils/cell';
+import { isCell } from '../utils/cell';
 import { usePlayer } from '../utils/contexts/PlayerContext';
 import { useMaze } from '../utils/contexts/MazeContext';
 import { sizeClass } from '../utils/styles/size';
@@ -19,9 +19,9 @@ export const Cell = ({ coordinates }: Props) => {
   const { maze } = useMaze();
   const { size } = useGame();
   const { position } = usePlayer();
-  const cell = getCell(maze, coordinates);
-  const entryInfo = getEntryDirections(maze, coordinates);
-  const exitInfo = getExitDirections(maze, coordinates);
+  const cell = maze.getCell(coordinates);
+  const entryInfo = maze.getEntryDirections(coordinates);
+  const exitInfo = maze.getExitDirections(coordinates);
   const isPlayer = isCell(position, coordinates);
 
   return (

@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { getEntryCoordinates, isOneOfCells } from '../utils/cell';
+import { isOneOfCells } from '../utils/cell';
 import { useGame } from '../utils/contexts/GameContext';
 import { MazeContext } from '../utils/contexts/MazeContext';
 import { PlayerContext, PlayerInfo } from '../utils/contexts/PlayerContext';
@@ -27,14 +27,14 @@ export const Maze = () => {
     }
   }, []);
 
-  const [position, setPosition] = useState(getEntryCoordinates(maze));
+  const [position, setPosition] = useState(maze.entry);
   const [canMove, setCanMove] = useState(true);
 
   let player = useRef<PlayerInfo>();
   player.current = { position, canMove };
 
   const restart = useCallback(() => {
-    setPosition(getEntryCoordinates(maze));
+    setPosition(maze.entry);
     setCanMove(true);
   }, [maze]);
 
