@@ -1,10 +1,10 @@
 import cx from 'classnames';
 import { Coordinates } from "../interfaces";
-import arrowRight from '../public/arrow_right.svg';
-import arrowLeft from '../public/arrow_left.svg';
-import arrowBottom from '../public/arrow_bottom.svg';
-import arrowTop from '../public/arrow_top.svg';
-import player from '../public/player.svg';
+import ArrowRight from '../static/arrow_right.svg';
+import ArrowLeft from '../static/arrow_left.svg';
+import ArrowBottom from '../static/arrow_bottom.svg';
+import ArrowTop from '../static/arrow_top.svg';
+import Player from '../static/player.svg';
 
 import { getCell, getEntryDirections, getExitDirections, isCell } from '../utils/cell';
 import { usePlayer } from '../utils/contexts/PlayerContext';
@@ -24,8 +24,6 @@ export const Cell = ({ coordinates }: Props) => {
   const exitInfo = getExitDirections(maze, coordinates);
   const isPlayer = isCell(position, coordinates);
 
-  const itemClass = sizeClass[size].item;
-
   return (
     <div
       data-cell={JSON.stringify(cell)}
@@ -41,35 +39,17 @@ export const Cell = ({ coordinates }: Props) => {
       )}
       title={`${coordinates[0]},${coordinates[1]}`}
     >
-      {entryInfo.top && (
-        <img className={cx(positionClass.top, itemClass)} src={arrowBottom} alt="" />
-      )}
-      {entryInfo.bottom && (
-        <img className={cx(positionClass.bottom, itemClass)} src={arrowTop} alt="" />
-      )}
-      {entryInfo.left && (
-        <img className={cx(positionClass.left, itemClass)} src={arrowRight} alt="" />
-      )}
-      {entryInfo.right && (
-        <img className={cx(positionClass.right, itemClass)} src={arrowLeft} alt="" />
-      )}
+      {entryInfo.top && <ArrowBottom className={positionClass.top} />}
+      {entryInfo.bottom && <ArrowTop className={positionClass.bottom} />}
+      {entryInfo.left && <ArrowRight className={positionClass.left} />}
+      {entryInfo.right && <ArrowLeft className={positionClass.right} />}
 
-      {exitInfo.top && (
-        <img className={cx(positionClass.top, itemClass)} src={arrowTop} alt="" />
-      )}
-      {exitInfo.bottom && (
-        <img className={cx(positionClass.bottom, itemClass)} src={arrowBottom} alt="" />
-      )}
-      {exitInfo.left && (
-        <img className={cx(positionClass.left, itemClass)} src={arrowLeft} alt="" />
-      )}
-      {exitInfo.right && (
-        <img className={cx(positionClass.right, itemClass)} src={arrowRight} alt="" />
-      )}
+      {exitInfo.top && <ArrowTop className={positionClass.top} />}
+      {exitInfo.bottom && <ArrowBottom className={positionClass.bottom} />}
+      {exitInfo.left && <ArrowLeft className={positionClass.left} />}
+      {exitInfo.right && <ArrowRight className={positionClass.right} />}
 
-      {isPlayer && (
-        <img className={cx(positionClass.center, itemClass)} src={player} alt="" />
-      )}
+      {isPlayer && <Player className={positionClass.center} />}
     </div>
-  )
-}
+  );
+};
