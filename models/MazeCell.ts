@@ -1,11 +1,11 @@
 import { MazeWallState } from "../interfaces";
 
 export class MazeCell {
-  public top?: MazeWallState;
-  public left?: MazeWallState;
+  public north?: MazeWallState;
+  public west?: MazeWallState;
 
   constructor(init?: MazeCell) {
-    this.top = init?.top;
-    this.left = init?.left;
+    this.north = init?.north;
+    this.west = init?.west;
   }
 }
