@@ -64,7 +64,7 @@ const Game = () => {
 
       {hasWon ? (
         <Card className="text-pink-400 text-lg">
-          <p>
+          <p className="p-6">
             You reached level {mazeIndex}
             <br />Congrats, you won 🎉
           </p>
