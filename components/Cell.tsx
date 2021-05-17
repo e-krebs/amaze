@@ -1,7 +1,7 @@
-import ArrowRight from '../static/arrow_right.svg';
-import ArrowLeft from '../static/arrow_left.svg';
-import ArrowBottom from '../static/arrow_bottom.svg';
-import ArrowTop from '../static/arrow_top.svg';
+import ArrowPointingNorth from '../static/arrow-pointing-north.svg';
+import ArrowPointingEast from '../static/arrow-pointing-east.svg';
+import ArrowPointingSouth from '../static/arrow-pointing-south.svg';
+import ArrowPointingWest from '../static/arrow-pointing-west.svg';
 import Player from '../static/player.svg';
 
 import cx from 'classnames';
@@ -34,15 +34,15 @@ export const Cell = ({ coordinates }: Props) => {
       )}
       title={`${coordinates.x},${coordinates.y}`}
     >
-      {entry.north && <ArrowBottom className={positionClass.north} />}
-      {entry.east && <ArrowLeft className={positionClass.east} />}
-      {entry.south && <ArrowTop className={positionClass.south} />}
-      {entry.west && <ArrowRight className={positionClass.west} />}
+      {entry.north && <ArrowPointingSouth className={positionClass.north} />}
+      {entry.east && <ArrowPointingWest className={positionClass.east} />}
+      {entry.south && <ArrowPointingNorth className={positionClass.south} />}
+      {entry.west && <ArrowPointingEast className={positionClass.west} />}
 
-      {exit.north && <ArrowTop className={positionClass.north} />}
-      {exit.east && <ArrowRight className={positionClass.east} />}
-      {exit.south && <ArrowBottom className={positionClass.south} />}
-      {exit.west && <ArrowLeft className={positionClass.west} />}
+      {exit.north && <ArrowPointingNorth className={positionClass.north} />}
+      {exit.east && <ArrowPointingEast className={positionClass.east} />}
+      {exit.south && <ArrowPointingSouth className={positionClass.south} />}
+      {exit.west && <ArrowPointingWest className={positionClass.west} />}
 
       {coordinates.isCell(position) && <Player className={positionClass.center} />}
     </div>
