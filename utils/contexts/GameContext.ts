@@ -4,11 +4,9 @@ import { MazeData } from "../../models/MazeData";
 
 export type GameState = {
   size: Size;
-  hasWon: boolean;
-  setHasWon: (state: boolean) => void;
-  mazeList: MazeData[];
-  mazeIndex: number;
-  setMazeIndex: (index: number) => void;
+  level: number;  
+  currentMaze: MazeData;
+  nextMaze: () => void;
 }
 
 export const GameContext = createContext<GameState | null>(null);

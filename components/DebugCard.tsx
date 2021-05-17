@@ -1,41 +1,42 @@
 import cx from 'classnames';
 import React from "react";
 import { useGame } from '../utils/contexts/GameContext';
-import { usePlayer } from "../utils/contexts/PlayerContext";
+import { useMaze } from '../utils/contexts/MazeContext';
 import { Button } from './Button';
 import { Card, CardProps } from "./Card";
 
-export const DebugCard = (props: CardProps) => {
-  const { canMove, position } = usePlayer();
-  const { mazeIndex, hasWon, mazeList, setMazeIndex, size } = useGame();
+export const DebugCard = ({ className, ...props }: CardProps) => {
+  const { level, nextMaze, size } = useGame();
+  const { position, maze } = useMaze();
 
   return (
-    <Card className="order-3 lg:self-start w-full lg:w-80" {...props}>
-      <h3 className="text-lg font-semibold">{'<'}debug info{'>'}</h3>
-      <div>size: {size}</div>
-      <div>position: {position[0]},{position[1]}</div>
-      <div className={cx(canMove ? 'text-green-700' : 'text-red-600')}>
-        can move: {canMove ? 'yes' : 'NO'}
+    <Card className={cx('space-y-3', className)} {...props}>
+      <div className="text-lg font-semibold text-center">{'<'}debug info{'>'}</div>
+      <div className="grid grid-cols-2 items-center justify-items-center">
+        <span className="m-2">level {level}</span>
+        <Button className="m-2" onPress={nextMaze}>next maze →</Button>
+        <div className="m-2 grid grid-cols-3 grid-rows-3 w-20 h-20 text-center border border-gray-400 rounded-full">
+          <div className="row-start-1 col-start-2">
+            {maze.isNorthOpen(position, false) && '↑'}
+          </div>
+          <div className="row-start-2 col-start-1">
+            {maze.isWestOpen(position, false) && '←'}
+          </div>
+          <div className="row-start-2 col-start-2">{position?.toString()}</div>
+          <div className="row-start-2 col-start-3">
+            {maze.isEastOpen(position, false) && '→'}
+          </div>
+          <div className="row-start-3 col-start-2">
+            {maze.isSouthOpen(position, false) && '↓'}
+          </div>
+        </div>
+        <div className="m-2">
+          <div>size: {size}</div>
+          <div>entry: {maze.entry.toString()}</div>
+          <div>exits: {maze.exits.map(x => x.toString()).reduce((x, y) => `${x} - ${y}`)}</div>
+        </div>
       </div>
-      <div className={cx(hasWon ? 'text-green-700' : 'text-red-600')}>
-        has won: {hasWon ? 'yes' : 'NO'}
-      </div>
-      <div>maze {mazeIndex + 1} of {mazeList.length}</div>
-
-      <div className="flex space-x-2 mt-2">
-        <Button
-          onPress={() => setMazeIndex(mazeIndex - 1)}
-          disabled={mazeIndex <= 0}
-        >
-          ← previous maze
-        </Button>
-        <Button
-          onPress={() => setMazeIndex(mazeIndex + 1)}
-          disabled={mazeIndex >= mazeList.length - 1}
-        >
-          next maze →
-        </Button>
-      </div>
+      <div className="text-lg font-semibold text-center">{'</ '}debug info{'>'}</div>
     </Card>
   );
 };

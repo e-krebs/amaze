@@ -1,9 +1,10 @@
 import { createContext, useContext } from "react"
+import { Coordinates } from "../../models/Coordinates";
 import { MazeData } from "../../models/MazeData";
 
 export type MazeInfo = {
   maze: MazeData;
-  nextMaze: () => void;
+  position: Coordinates | null;
 }
 
 export const MazeContext = createContext<MazeInfo | null>(null);
