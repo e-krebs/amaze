@@ -7,7 +7,7 @@ import { Card, CardProps } from "./Card";
 
 export const DebugCard = ({ className, ...props }: CardProps) => {
   const { level, nextMaze, size } = useGame();
-  const { position, maze } = useMaze();
+  const { position, maze, solution } = useMaze();
 
   return (
     <Card className={cx('space-y-3', className)} {...props}>
@@ -34,6 +34,13 @@ export const DebugCard = ({ className, ...props }: CardProps) => {
           <div>size: {size}</div>
           <div>entry: {maze.entry.toString()}</div>
           <div>exits: {maze.exits.map(x => x.toString()).reduce((x, y) => `${x} - ${y}`)}</div>
+        </div>
+        <div className="col-span-2 text-center grid grid-cols-2 gap-x-3 gap-y-1">
+          {solution && (
+            solution.map((step, key) => (
+              <div key={key}>{step.toString()}</div>
+            ))
+          )}
         </div>
       </div>
       <div className="text-lg font-semibold text-center">{'</ '}debug info{'>'}</div>

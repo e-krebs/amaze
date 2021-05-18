@@ -64,7 +64,11 @@ export const Maze = () => {
             {currentMaze.grid.map((line, y) => (
               <Fragment key={y}>
                 {line.map((_, x) => (
-                  <Cell key={x} coordinates={Coordinates.fromArray([x, y])} />
+                  <Cell
+                    key={x}
+                    coordinates={Coordinates.fromArray([x, y])}
+                    solution={solution}
+                  />
                 ))}
               </Fragment>
             ))}
