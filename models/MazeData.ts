@@ -1,4 +1,4 @@
-import { Cols } from "../utils/styles/cols";
+import { Cols } from "../interfaces";
 import { Coordinates } from "./Coordinates";
 import { Directions } from "./Directions";
 import { MazeCell } from "./MazeCell";
@@ -138,26 +138,26 @@ export class MazeData {
   //#endregion
 
   //#region isLast & getCellCoordinates
-  private isLastNorth = (coordinates: Coordinates): boolean => coordinates.y === 0;
+  public isLastNorth = (coordinates: Coordinates): boolean => coordinates.y === 0;
 
-  private isLastEast = (coordinates: Coordinates): boolean =>
+  public isLastEast = (coordinates: Coordinates): boolean =>
     !this.getCellFromArray([coordinates.x + 2, coordinates.y]);
 
-  private isLastSouth = (coordinates: Coordinates): boolean =>
+  public isLastSouth = (coordinates: Coordinates): boolean =>
     !this.getCellFromArray([coordinates.x, coordinates.y + 2]);
 
   public isLastWest = (coordinates: Coordinates): boolean => coordinates.x === 0;
 
-  private getNorthCellCoordinates = (coordinates: Coordinates): Coordinates =>
+  public getNorthCellCoordinates = (coordinates: Coordinates): Coordinates =>
     Coordinates.fromArray([coordinates.x, coordinates.y - 1]);
 
-  private getEastCellCoordinates = (coordinates: Coordinates): Coordinates =>
+  public getEastCellCoordinates = (coordinates: Coordinates): Coordinates =>
     Coordinates.fromArray([coordinates.x + 1, coordinates.y]);
 
-  private getSouthCellCoordinates = (coordinates: Coordinates): Coordinates =>
+  public getSouthCellCoordinates = (coordinates: Coordinates): Coordinates =>
     Coordinates.fromArray([coordinates.x, coordinates.y + 1]);
 
-  private getWestCellCoordinates = (coordinates: Coordinates): Coordinates =>
+  public getWestCellCoordinates = (coordinates: Coordinates): Coordinates =>
     Coordinates.fromArray([coordinates.x - 1, coordinates.y]);
   //#endregion
 
