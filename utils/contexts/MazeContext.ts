@@ -5,6 +5,7 @@ import { MazeData } from "../../models/MazeData";
 export type MazeInfo = {
   maze: MazeData;
   position: Coordinates | null;
+  solution: Coordinates[] | null;
 }
 
 export const MazeContext = createContext<MazeInfo | null>(null);

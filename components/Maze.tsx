@@ -18,14 +18,20 @@ export const Maze = () => {
   maze.current = currentMaze;
 
   const [position, setPosition] = useState<Coordinates | null>(currentMaze.entry);
+  const currentPos = useRef<Coordinates | null>(null);
+  currentPos.current = position;
+
+  const [solution, setSolution] = useState<Coordinates[] | null>(null);
 
   const moveNorth = () => setPosition(position => maze.current.moveNorth(position));
   const moveEast = () => setPosition(position => maze.current.moveEast(position));
   const moveSouth = () => setPosition(position => maze.current.moveSouth(position));
   const moveWest = () => setPosition(position => maze.current.moveWest(position));
   const restart = () => setPosition(maze.current.entry);
+  const updateSolution = () => setSolution(maze.current.getSolution(currentPos.current));
 
   useHotkeys('R', restart);
+  useHotkeys('S', updateSolution);
   useHotkeys('up', moveNorth);
   useHotkeys('right', moveEast);
   useHotkeys('down', moveSouth);
@@ -35,12 +41,15 @@ export const Maze = () => {
     if (position === null) {
       nextMaze();
     }
+    if (solution !== null) {
+      updateSolution();
+    }
   }, [position]);
 
   useEffect(restart, [currentMaze]);
 
   return (
-    <MazeContext.Provider value={{ maze: currentMaze, position }}>
+    <MazeContext.Provider value={{ maze: currentMaze, position, solution }}>
       <div className="flex flex-col items-center w-full lg:w-auto lg:grid lg:grid-cols-2 lg:grid-rows-3">
         <Card
           className="order-2 lg:order-1 lg:row-span-3 lg:self-start p-0 w-full lg:w-auto"
