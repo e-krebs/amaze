@@ -112,6 +112,15 @@ export const Maze = () => {
             />
             <span>to restart the current level</span>
           </div>
+          <div className="flex space-x-2">
+            <span>Press</span>
+            <KeyCap
+              keyCode="s"
+              onClick={updateSolution}
+              className="w-7 h-7"
+            />
+            <span>to see a solution</span>
+          </div>
         </Card>
         <DebugCard className="lg:row-span-2 order-3 lg:self-start w-full lg:w-80" />
       </div>
