@@ -7,13 +7,14 @@ import { MazeData } from '../models/MazeData';
 import { useGame } from '../utils/contexts/GameContext';
 import { MazeContext } from '../utils/contexts/MazeContext';
 import { gridCols } from '../utils/styles/cols';
+import { sizeClass } from '../utils/styles/size';
 import { Card } from './Card';
 import { Cell } from './Cell';
 import { DebugCard } from './DebugCard';
 import { KeyCap } from './KeyCap';
 
 export const Maze = () => {
-  const { currentMaze, nextMaze } = useGame();
+  const { currentMaze, nextMaze, size } = useGame();
   const maze = useRef<MazeData>(currentMaze);
   maze.current = currentMaze;
 
@@ -55,12 +56,13 @@ export const Maze = () => {
     <MazeContext.Provider value={{ maze: currentMaze, position, solution }}>
       <div className="flex flex-col items-center w-full lg:w-auto lg:grid lg:grid-cols-2 lg:grid-rows-3">
         <Card
-          className="order-2 lg:order-1 lg:row-span-3 lg:self-start p-0 w-full lg:w-auto"
+          className="order-2 lg:order-1 lg:row-span-3 lg:self-start p-0 w-full lg:w-auto overflow-x-auto lg:overflow-x-hidden text-center"
           fullBleed={true}
         >
           <div
             className={cx(
-              'inline-grid grid-flow-row auto-cols-min pt-16 pl-16 pb-0 pr-0',
+              'inline-grid grid-flow-row auto-cols-min pb-0 pr-0 w-max lg:w-auto',
+              sizeClass[size].grid,
               gridCols[currentMaze.nbCols]
             )}
           >
