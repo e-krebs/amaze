@@ -27,7 +27,10 @@ export const Maze = () => {
   const moveEast = () => setPosition(position => maze.current.moveEast(position));
   const moveSouth = () => setPosition(position => maze.current.moveSouth(position));
   const moveWest = () => setPosition(position => maze.current.moveWest(position));
-  const restart = () => setPosition(maze.current.entry);
+  const restart = () => {
+    setSolution(null);
+    setPosition(maze.current.entry);
+  };
   const updateSolution = () => setSolution(maze.current.getSolution(currentPos.current));
 
   useHotkeys('R', restart);
