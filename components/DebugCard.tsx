@@ -35,12 +35,15 @@ export const DebugCard = ({ className, ...props }: CardProps) => {
           <div>entry: {maze.entry.toString()}</div>
           <div>exits: {maze.exits.map(x => x.toString()).reduce((x, y) => `${x} - ${y}`)}</div>
         </div>
-        <div className="col-span-2 text-center grid grid-cols-6 gap-x-3 gap-y-1">
-          {solution && (
-            solution.map((step, key) => (
-              <div key={key}>{step.toString()}</div>
-            ))
-          )}
+        <div className="col-span-2 text-center m-2 space-y-2">
+          {solution && <div>solution size: {solution.length}</div>}
+          <div className="grid grid-cols-6 gap-x-3 gap-y-1">
+            {solution && (
+              solution.map((step, key) => (
+                <div key={key}>{step.toString()}</div>
+              ))
+            )}
+          </div>
         </div>
       </div>
       <div className="text-lg font-semibold text-center">{'</ '}debug info{'>'}</div>
