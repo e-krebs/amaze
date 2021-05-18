@@ -42,6 +42,49 @@ export class MazeData {
     return Math.min(nbCols, 12) as Cols;
   }
 
+  private getNextCells = (
+    currentCell: Coordinates,
+    alreadyVisited: Coordinates[] = []
+  ): Coordinates[] => {
+    const nextCells: Coordinates[] = [];
+    if (this.isNorthOpen(currentCell, false)) {
+      const northCell = this.getNorthCellCoordinates(currentCell);
+      if (!northCell.isOneOfCells(alreadyVisited)) nextCells.push(northCell);
+    }
+    if (this.isEastOpen(currentCell, false)) {
+      const eastCell = this.getEastCellCoordinates(currentCell);
+      if (!eastCell.isOneOfCells(alreadyVisited)) nextCells.push(eastCell);
+    }
+    if (this.isSouthOpen(currentCell, false)) {
+      const southCell = this.getSouthCellCoordinates(currentCell);
+      if (!southCell.isOneOfCells(alreadyVisited)) nextCells.push(southCell);
+    }
+    if (this.isWestOpen(currentCell, false)) {
+      const westCell = this.getWestCellCoordinates(currentCell);
+      if (!westCell.isOneOfCells(alreadyVisited)) nextCells.push(westCell);
+    }
+    return nextCells;
+  }
+
+  private navigate = (
+    currentCell: Coordinates,
+    path: Coordinates[] = [currentCell]
+  ): Coordinates[] | null => {
+    const nextCells = this.getNextCells(currentCell, path);
+    for (const nextCell of nextCells) {
+      const newPath = [...path, nextCell];
+      if (nextCell.isOneOfCells(this.exits)) {
+        return newPath;
+      }
+      const finalPath = this.navigate(nextCell, newPath);
+      if (finalPath) return finalPath;
+    }
+    return null;
+  }
+
+  public getSolution = (start: Coordinates | null): Coordinates[] | null =>
+    (start === null) ? null : this.navigate(start);
+
   //#region move methods
   public moveNorth = (position: Coordinates | null): Coordinates | null => {
     if (position === null || !this.isNorthOpen(position, false)) return position;

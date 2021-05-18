@@ -15,7 +15,9 @@ export class Coordinates {
     coordinates !== null && this.x === coordinates.x && this.y === coordinates.y;
 
   public isOneOfCells = (coordinatesArray: Coordinates[]): boolean =>
-    coordinatesArray.map(coordinates => this.isCell(coordinates)).reduce((x, y) => x || y);
+    coordinatesArray.length <= 0
+      ? false
+      : coordinatesArray.map(coordinates => this.isCell(coordinates)).reduce((x, y) => x || y);
 
   public toArray = (): CoordinatesPair => [this.x, this.y];
 
