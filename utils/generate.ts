@@ -78,8 +78,23 @@ const navigate = (
   }
   return null;
 }
+const getPath = async (maze: MazeData, size: Cols): Promise<Coordinates[]> => {
+  const minSize = Math.pow(size - 1, 2);
+  const maxSize = Math.pow(size, 2);
 
-export const generate = (size: Cols): MazeData => {
+  return new Promise((resolve) => {
+    while (true) {
+      depth = 0;
+      let path = navigate(maze);
+      if (path && path.length >= minSize && path.length <= maxSize) {
+        resolve(path);
+        break;
+      }
+    }
+  })
+};
+
+export const generate = async (size: Cols): Promise<MazeData> => {
   const entry: CoordinatesPair = [randomInt(size), 0];
   const entryCoordinates: Coordinates = Coordinates.fromArray(entry);
 
@@ -103,16 +118,7 @@ export const generate = (size: Cols): MazeData => {
 
   let maze = new MazeData({ grid, entry, exits: [exit] });
 
-  let path: Coordinates[] | null = null;
-  const minSize = Math.pow(size - 1, 2);
-  const maxSize = Math.pow(size, 2);
-  while (path === null) {
-    depth = 0;
-    path = navigate(maze);
-    if (path && (path.length < minSize || path.length > maxSize)) {
-      path = null;
-    }
-  }
+  const path: Coordinates[] = await getPath(maze, size);
 
   for (let i = 0; i < path.length - 1; i++) {
     maze = openPath(maze, path[i], path[i + 1]);

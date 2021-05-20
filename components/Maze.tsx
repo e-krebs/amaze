@@ -8,10 +8,9 @@ import { useGame } from '../utils/contexts/GameContext';
 import { MazeContext } from '../utils/contexts/MazeContext';
 import { gridCols } from '../utils/styles/cols';
 import { sizeClass } from '../utils/styles/size';
-import { Card } from './Card';
+import { Card, KeyCap } from './elements';
 import { Cell } from './Cell';
 import { DebugCard } from './DebugCard';
-import { KeyCap } from './KeyCap';
 
 export const Maze = () => {
   const { currentMaze, nextMaze, size } = useGame();
@@ -36,10 +35,10 @@ export const Maze = () => {
 
   useHotkeys('R', restart);
   useHotkeys('S', updateSolution);
-  useHotkeys('up', moveNorth);
-  useHotkeys('right', moveEast);
-  useHotkeys('down', moveSouth);
-  useHotkeys('left', moveWest);
+  useHotkeys('up', (e) => { moveNorth(); e.preventDefault(); });
+  useHotkeys('right', (e) => { moveEast(); e.preventDefault(); });
+  useHotkeys('down', (e) => { moveSouth(); e.preventDefault(); });
+  useHotkeys('left', (e) => { moveWest(); e.preventDefault(); });
 
   useEffect(() => {
     if (position === null) {
@@ -54,9 +53,9 @@ export const Maze = () => {
 
   return (
     <MazeContext.Provider value={{ maze: currentMaze, position, solution }}>
-      <div className="flex flex-col items-center w-full lg:w-auto lg:grid lg:grid-cols-2 lg:grid-rows-3">
+      <div className="flex flex-col items-center w-full lg:w-auto lg:grid lg:grid-cols-3 lg:grid-rows-3">
         <Card
-          className="order-2 lg:order-1 lg:row-span-3 lg:self-start p-0 w-full lg:w-auto overflow-x-auto lg:overflow-x-hidden text-center"
+          className="order-2 lg:order-1 lg:row-span-3 lg:col-span-2 lg:self-start p-0 w-full lg:w-auto overflow-x-auto lg:overflow-x-hidden text-center"
           fullBleed={true}
         >
           <div

@@ -2,8 +2,7 @@ import cx from 'classnames';
 import React from "react";
 import { useGame } from '../utils/contexts/GameContext';
 import { useMaze } from '../utils/contexts/MazeContext';
-import { Button } from './Button';
-import { Card, CardProps } from "./Card";
+import { Button, Card, CardProps } from './elements';
 
 export const DebugCard = ({ className, ...props }: CardProps) => {
   const { level, nextMaze, size } = useGame();
