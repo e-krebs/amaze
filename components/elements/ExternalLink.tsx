@@ -13,7 +13,7 @@ export const ExternalLink: FC<Props> = ({
     href={href}
     target="_blank"
     rel="noopener"
-    className={cx('text-pink-400 hover:underline', className)}
+    className={cx('text-pink-500 hover:underline', className)}
     {...props}
   >
     {children}
