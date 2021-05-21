@@ -12,3 +12,10 @@ export const sizeClass: Record<Size, SizeDefinition> = {
   L: { width: 'w-12', height: 'h-12', grid: 'pt-12 pl-12' },
   XL: { width: 'w-16', height: 'h-16', grid: 'pt-16 pl-16' },
 };
+
+export const pixelSize: Record<Size, number> = {
+  S: 4 * 4,
+  M: 8 * 4,
+  L: 12 * 4,
+  XL: 16 * 4,
+};

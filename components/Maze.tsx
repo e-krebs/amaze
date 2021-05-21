@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState, useLayoutEffect, useCallback } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { Coordinates } from '../models/Coordinates';
@@ -7,13 +7,15 @@ import { MazeData } from '../models/MazeData';
 import { useGame } from '../utils/contexts/GameContext';
 import { MazeContext } from '../utils/contexts/MazeContext';
 import { gridCols } from '../utils/styles/cols';
-import { sizeClass } from '../utils/styles/size';
+import { pixelSize, sizeClass } from '../utils/styles/size';
 import { Card, KeyCap } from './elements';
 import { Cell } from './Cell';
 import { DebugCard } from './DebugCard';
+import { AllSizes, Size } from '../interfaces';
 
 export const Maze = () => {
-  const { currentMaze, nextMaze, size } = useGame();
+  const mazeCard = useRef<HTMLElement>(null);
+  const { currentMaze, nextMaze, size: currentSize, setSize } = useGame();
   const maze = useRef<MazeData>(currentMaze);
   maze.current = currentMaze;
 
@@ -40,6 +42,25 @@ export const Maze = () => {
   useHotkeys('down', (e) => { moveSouth(); e.preventDefault(); });
   useHotkeys('left', (e) => { moveWest(); e.preventDefault(); });
 
+  const computeResize = useCallback(() => {
+    const availableWidth = mazeCard.current!.offsetWidth;
+    const computeWidth = (size: Size): number => (currentMaze.nbCols + 1) * pixelSize[size];
+
+    let size = AllSizes[AllSizes.length - 1];
+    while (computeWidth(size) > availableWidth) {
+      const currentIndex = AllSizes.indexOf(size);
+      if (currentIndex <= 0) break;
+      size = AllSizes[currentIndex - 1];
+    }
+    setSize(size);
+  }, [currentSize, currentMaze.nbCols, mazeCard.current]);
+
+  useLayoutEffect(computeResize, [computeResize]);
+  useEffect(() => {
+    window.addEventListener('resize', computeResize);
+    return () => window.removeEventListener('resize', computeResize);
+  }, []);
+
   useEffect(() => {
     if (position === null) {
       nextMaze();
@@ -57,11 +78,12 @@ export const Maze = () => {
         <Card
           className="order-2 lg:order-1 lg:row-span-3 lg:col-span-2 lg:self-start p-0 w-full lg:w-auto overflow-x-auto lg:overflow-x-hidden text-center"
           fullBleed={true}
+          ref={mazeCard}
         >
           <div
             className={cx(
               'inline-grid grid-flow-row auto-cols-min pb-0 pr-0 w-max lg:w-auto',
-              sizeClass[size].grid,
+              sizeClass[currentSize].grid,
               gridCols[currentMaze.nbCols]
             )}
           >
