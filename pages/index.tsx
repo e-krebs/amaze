@@ -29,7 +29,7 @@ const IndexPage = () => {
       </Card >
 
       <Card className="flex flex-col items-center space-y-2">
-        <div>
+        <div className="text-center">
           You can find the source code{' '}
           <ExternalLink
             href="https://github.com/e-krebs/amaze"
