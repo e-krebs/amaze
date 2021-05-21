@@ -4,6 +4,7 @@ import { MazeData } from "../../models/MazeData";
 
 export type GameState = {
   size: Size;
+  setSize: (size: Size) => void;
   level: number;  
   currentMaze: MazeData;
   nextMaze: () => void;

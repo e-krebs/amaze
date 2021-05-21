@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Item } from '@react-stately/collections';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -14,6 +14,7 @@ const LevelPage = () => {
   const { query, push } = useRouter();
 
   const [size, setSize] = useState<Size>('XL');
+
   const [loading, setLoading] = useState(true);
   const [maze, setMaze] = useState<MazeData | null>(null);
 
@@ -48,7 +49,7 @@ const LevelPage = () => {
             level {level}
           </h2>
           <DropDown
-            defaultSelectedKey={size}
+            selectedKey={size}
             label="Size"
             onSelectionChange={(value) => setSize(value as Size)}
           >
@@ -72,6 +73,7 @@ const LevelPage = () => {
           currentMaze: maze!,
           nextMaze: () => push(level! >= 4 ? '/end' : `/level/${level! + 1}`),
           size,
+          setSize,
         }}>
           <Maze />
         </GameContext.Provider>
