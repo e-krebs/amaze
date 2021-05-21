@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Item } from '@react-stately/collections';
 import { useHotkeys } from 'react-hotkeys-hook';
 
