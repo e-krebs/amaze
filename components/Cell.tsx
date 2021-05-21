@@ -48,7 +48,7 @@ export const Cell = ({ coordinates, solution }: Props) => {
         ? <Player className={positionClass.center} />
         : <>
           {solution && coordinates.isOneOfCells(solution) && (
-            <div className="absolute left-2/5 top-2/5 w-1/5 h-1/5 bg-pink-500 opacity-25 rounded-full" />
+            <div className="absolute left-2/5 top-2/5 w-1/5 h-1/5 bg-pink-600 opacity-25 rounded-full" />
           )}
         </>
       }

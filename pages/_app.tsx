@@ -22,7 +22,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
     <main className="inline-flex flex-col items-center w-full p-6">
       <header className="flex items-baseline w-full lg:w-1/4 pb-6">
         <Link href="/">
-          <h1 className="flex-grow text-center px-8 text-4xl font-bold cursor-pointer hover:text-pink-500 hover:underline">
+          <h1 className="flex-grow text-center px-8 text-4xl font-bold cursor-pointer hover:text-pink-600 hover:underline">
             aMaze
           </h1>
         </Link>
