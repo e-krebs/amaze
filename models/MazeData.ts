@@ -68,22 +68,23 @@ export class MazeData {
 
   private navigate = (
     currentCell: Coordinates,
+    end: Coordinates[],
     path: Coordinates[] = [currentCell]
   ): Coordinates[] | null => {
     const nextCells = this.getNextCells(currentCell, path);
     for (const nextCell of nextCells) {
       const newPath = [...path, nextCell];
-      if (nextCell.isOneOfCells(this.exits)) {
+      if (nextCell.isOneOfCells(end)) {
         return newPath;
       }
-      const finalPath = this.navigate(nextCell, newPath);
+      const finalPath = this.navigate(nextCell, end, newPath);
       if (finalPath) return finalPath;
     }
     return null;
   }
 
-  public getSolution = (start: Coordinates | null): Coordinates[] | null =>
-    (start === null) ? null : this.navigate(start);
+  public getSolution = (start: Coordinates | null, end: Coordinates[] = this.exits): Coordinates[] | null =>
+    (start === null) ? null : this.navigate(start, end);
 
   //#region move methods
   public moveNorth = (position: Coordinates | null): Coordinates | null => {
