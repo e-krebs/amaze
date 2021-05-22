@@ -94,6 +94,39 @@ const getPath = async (maze: MazeData, size: Cols): Promise<Coordinates[]> => {
   })
 };
 
+const getUnreachables = (maze: MazeData): Coordinates[] => {
+  const cells: Coordinates[] = [];
+  for (let y = 0; y < maze.grid.length - 1; y++) {
+    for (let x = 0; x < maze.grid[y].length - 1; x++) {
+      const cell = new Coordinates({ x, y });
+      if (!maze.entry.isCell(cell)) cells.push(cell);
+    }
+  }
+
+  const unreachables: Coordinates[] = [];
+  for (const cell of cells) {
+    if (maze.getSolution(maze.entry, [cell]) === null) {
+      unreachables.push(cell);
+    }
+  }
+  return unreachables;
+}
+
+const unblockUnreachables = (maze: MazeData): MazeData => {
+  let newMaze = maze;
+  let unreachables = getUnreachables(newMaze);
+  do {
+    for (const unreachable of unreachables) {
+      const nextCells = getNextCells(newMaze, unreachable, unreachables);
+      if (nextCells.length >= 1) {
+        newMaze = openPath(newMaze, unreachable, nextCells[0]);
+      }
+    }
+    unreachables = getUnreachables(newMaze);
+  } while (unreachables.length > 0)
+  return newMaze;
+}
+
 export const generate = async (size: Cols): Promise<MazeData> => {
   const entry: CoordinatesPair = [randomInt(size), 0];
   const entryCoordinates: Coordinates = Coordinates.fromArray(entry);
@@ -123,6 +156,6 @@ export const generate = async (size: Cols): Promise<MazeData> => {
   for (let i = 0; i < path.length - 1; i++) {
     maze = openPath(maze, path[i], path[i + 1]);
   }
-  // TODO: deal with unreachable cells
-  return maze;
+
+  return unblockUnreachables(maze);
 }
