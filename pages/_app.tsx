@@ -1,17 +1,10 @@
 import 'tailwindcss/tailwind.css';
 
-import React, { FC } from 'react'
+import {SSRProvider} from '@react-aria/ssr';
+import React from 'react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head';
 import Link from 'next/link';
-
-const SafeHydrate: FC = ({ children }) => {
-  return (
-    <div suppressHydrationWarning className="contents w-full lg:w-max">
-      {typeof window === 'undefined' ? null : children}
-    </div>
-  )
-}
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <>
@@ -27,9 +20,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
           </h1>
         </Link>
       </header>
-      <SafeHydrate>
-        <Component {...pageProps} />
-      </SafeHydrate>
+      <div className="contents w-full lg:w-max">
+        <SSRProvider>
+          <Component {...pageProps} />
+        </SSRProvider>
+      </div>
     </main>
   </>
 );
